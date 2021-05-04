@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AddressBookProblem
 {
-    class Program
+    public class Program
     {
         /// <summary>
         /// Defines the entry point of the application.
@@ -14,20 +14,21 @@ namespace AddressBookProblem
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
         {
-            ////contacts is used to access contact details 
+            //contacts is used to access contact details 
             //sorted is used to acquire the elements in list 
             Dictionary<String, List<Contacts>> sorted = new Dictionary<String, List<Contacts>>();
             int c1 = 0;
-            while (c1 != 4)
+            while (c1 != 5)
             {
                 string bname = "";
-                Console.WriteLine("Welcome to Address Book Program");
+                Console.WriteLine("Hello, Welcome to Address Book Program");
                 //stores contacts list for different address books
                 List<Contacts> gcontacts = new List<Contacts>();
                 Console.WriteLine("1. Add Address Book: ");
                 Console.WriteLine("2. Edit a Particular Address Book: ");
                 Console.WriteLine("3. Display Address Book: ");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. View Person's Details By City: ");
+                Console.WriteLine("5. Exit");
                 Console.WriteLine("Enter your choice: ");
                 c1 = Convert.ToInt32(Console.ReadLine());
                 switch (c1)
@@ -68,8 +69,42 @@ namespace AddressBookProblem
                             }
                         }
                         break;
-                }
+                    case 4:
+                        Console.WriteLine("Enter the city: ");
+                        string city = Console.ReadLine();
 
+                        Dictionary<string, List<Contacts>> cty = new Dictionary<string, List<Contacts>>();
+                        List<Contacts> gtemp = new List<Contacts>();
+
+                        foreach (KeyValuePair<string, List<Contacts>> kv in sorted)
+                        {
+                            //gives list details per address book
+                            List<Contacts> list1 = kv.Value;
+                            List<Contacts> temp = new List<Contacts>();
+                            foreach (Contacts c in list1)
+                            {
+                                if (c.city.ToLower().Equals(city.ToLower()))
+                                {
+                                    temp.Add(c);
+                                }
+                            }
+                            //Appends person's details per book by city       
+                            gtemp.AddRange(temp);
+                        }
+                        cty.Add(city, gtemp);
+
+                        foreach (KeyValuePair<string, List<Contacts>> kv in cty)
+                        {
+                            string a = kv.Key;
+                            List<Contacts> lst = kv.Value;
+                            Console.WriteLine("City Name: " + a);
+                            foreach (Contacts c in lst)
+                            {
+                                Console.WriteLine(c);
+                            }
+                        }
+                        break;
+                }
             }
         }
 
@@ -83,9 +118,8 @@ namespace AddressBookProblem
             string bname = "";
             while (choice != 5)
             {
-                //here contact obj is stored temporarily, it changes when edited and deleted
+                //here contact obj is stored temporarly, changes when edited and deleted
                 List<Contacts> list = new List<Contacts>();
-                //indicating start condition
                 int flag = 0;
                 Console.WriteLine("Enter the following choice");
                 Console.WriteLine("1. Add Contacts");
@@ -114,8 +148,7 @@ namespace AddressBookProblem
                                 break;
                             }
                         }
-                        //Allows if New Name is entered
-                        if (flag1 == 0)
+                        if (flag1 == 0) //Allows if New Name is entered
                         {
                             Console.WriteLine("Enter the address: ");
                             string address = Console.ReadLine();
@@ -226,8 +259,7 @@ namespace AddressBookProblem
                         {
                             if (c.first_name.Equals(fst))
                             {
-                                //we can't delete the object while iterating through the list, it leads to exception
-                                lst.Add(c);
+                                lst.Add(c);             //we can't delete the object while iterating through the list, it leads to exception
                             }
                         }
                         contacts.RemoveAll(i => lst.Contains(i));
@@ -240,7 +272,7 @@ namespace AddressBookProblem
                         }
                         break;
                 }
-                //first obj gets added into list in every iteration of while loop, stores into contacts list, then modifies content in case 2,3 through contacts list
+                ////first obj gets added into list in every iteration of while loop, stores into contacts list, then modifies content in case 2,3 through contacts list
                 contacts.AddRange(list);
             }
         }
