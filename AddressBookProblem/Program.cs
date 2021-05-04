@@ -12,16 +12,80 @@ namespace AddressBookProblem
         /// Defines the entry point of the application.
         /// </summary>
         /// <param name="args">The arguments.</param>
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            //creating a list
-            List<Contacts> contacts = new List<Contacts>();
+            //contacts is used to access contact details 
+            //sorted is used to acquire the elements in list 
+            Dictionary<String, List<Contacts>> sorted = new Dictionary<String, List<Contacts>>();
+            int c1 = 0;
+            while (c1 != 4)
+            {
+                string bname = " ";
+                Console.WriteLine("Hello, Welcome to Address Book!");
+                //stores contacts list for different address books
+                List<Contacts> gcontacts = new List<Contacts>();
+                Console.WriteLine("1. Add Address Book: ");
+                Console.WriteLine("2. Edit a Particular Address Book: ");
+                Console.WriteLine("3. Display Address Book: ");
+                Console.WriteLine("4. Exit");
+                Console.WriteLine("Enter your choice: ");
+                c1 = Convert.ToInt32(Console.ReadLine());
+                switch (c1)
+                {
+                    case 1:
+                        Console.WriteLine("Enter the name of Address Book: ");
+                        bname = Console.ReadLine();
+                        //stores contacts list for a particular book
+                        List<Contacts> contacts = new List<Contacts>();
 
-            Console.WriteLine("Hello, Welcome to Address Book!");
-            //choice = 0 means choice has not made yet
+                        Program.edit_data(contacts);
+
+                        gcontacts.AddRange(contacts);
+                        sorted.Add(bname, gcontacts);
+                        break;
+
+                    case 2:
+                        Console.WriteLine("Enter the name of Address Book: ");
+                        string bname1 = Console.ReadLine();
+                        if (sorted.ContainsKey(bname1))
+                        {
+                            List<Contacts> edit = sorted[bname1];
+                            Program.edit_data(edit);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Mentioned Address Book is not there");
+                        }
+                        break;
+
+                    case 3:
+                        foreach (KeyValuePair<String, List<Contacts>> kv in sorted)
+                        {
+                            string a = kv.Key;
+                            List<Contacts> list1 = (List<Contacts>)kv.Value;
+                            Console.WriteLine("Address Book Name: " + a);
+                            foreach (Contacts c in list1)
+                            {
+                                Console.WriteLine(c);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Edits the data.
+        /// </summary>
+        /// <param name="contacts">The contacts.</param>
+        public static void edit_data(List<Contacts> contacts)
+        {
             int choice = 0;
+            string bname = " ";
             while (choice != 5)
             {
+                //here contact obj is stored temporarily, changes when edited and deleted
+                List<Contacts> list = new List<Contacts>();
                 Console.WriteLine("\t********Main Menu***********\t");
                 Console.WriteLine("Enter the following choice");
                 Console.WriteLine("1. Add Contacts");
@@ -54,7 +118,7 @@ namespace AddressBookProblem
                         string email = Console.ReadLine();
 
                         Contacts ct1 = new Contacts(first_name, last_name, address, city, state, zip, phone, email);
-                        contacts.Add(ct1);
+                        list.Add(ct1);
                         Console.WriteLine("Contact Added Successfully");
                         break;
 
@@ -163,6 +227,8 @@ namespace AddressBookProblem
                         }
                         break;
                 }
+                //first obj gets added into list in every iteration of while loop, stores into contacts list, then modifies content in case 2,3 through contacts list
+                contacts.AddRange(list);
             }
         }
     }
