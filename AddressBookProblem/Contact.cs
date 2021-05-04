@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AddressBookProblem
 {
-    class Contacts
+    public class Contacts
     {
         //list is created to store contact info
         List<Contacts> contacts = new List<Contacts>();

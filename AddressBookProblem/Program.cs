@@ -14,14 +14,14 @@ namespace AddressBookProblem
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
         {
-            //contacts is used to access contact details 
+            ////contacts is used to access contact details 
             //sorted is used to acquire the elements in list 
             Dictionary<String, List<Contacts>> sorted = new Dictionary<String, List<Contacts>>();
             int c1 = 0;
             while (c1 != 4)
             {
-                string bname = " ";
-                Console.WriteLine("Hello, Welcome to Address Book!");
+                string bname = "";
+                Console.WriteLine("Welcome to Address Book Program");
                 //stores contacts list for different address books
                 List<Contacts> gcontacts = new List<Contacts>();
                 Console.WriteLine("1. Add Address Book: ");
@@ -43,7 +43,6 @@ namespace AddressBookProblem
                         gcontacts.AddRange(contacts);
                         sorted.Add(bname, gcontacts);
                         break;
-
                     case 2:
                         Console.WriteLine("Enter the name of Address Book: ");
                         string bname1 = Console.ReadLine();
@@ -57,7 +56,6 @@ namespace AddressBookProblem
                             Console.WriteLine("Mentioned Address Book is not there");
                         }
                         break;
-
                     case 3:
                         foreach (KeyValuePair<String, List<Contacts>> kv in sorted)
                         {
@@ -71,6 +69,7 @@ namespace AddressBookProblem
                         }
                         break;
                 }
+
             }
         }
 
@@ -81,12 +80,13 @@ namespace AddressBookProblem
         public static void edit_data(List<Contacts> contacts)
         {
             int choice = 0;
-            string bname = " ";
+            string bname = "";
             while (choice != 5)
             {
-                //here contact obj is stored temporarily, changes when edited and deleted
+                //here contact obj is stored temporarily, it changes when edited and deleted
                 List<Contacts> list = new List<Contacts>();
-                Console.WriteLine("\t********Main Menu***********\t");
+                //indicating start condition
+                int flag = 0;
                 Console.WriteLine("Enter the following choice");
                 Console.WriteLine("1. Add Contacts");
                 Console.WriteLine("2. Edit Contacts");
@@ -104,22 +104,36 @@ namespace AddressBookProblem
                         string first_name = Console.ReadLine();
                         Console.WriteLine("Enter the lastname: ");
                         string last_name = Console.ReadLine();
-                        Console.WriteLine("Enter the address: ");
-                        string address = Console.ReadLine();
-                        Console.WriteLine("Enter the city: ");
-                        string city = Console.ReadLine();
-                        Console.WriteLine("Enter the state: ");
-                        string state = Console.ReadLine();
-                        Console.WriteLine("Enter the zip: ");
-                        int zip = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the phone number");
-                        long phone = Convert.ToInt64(Console.ReadLine());
-                        Console.WriteLine("Enter the email: ");
-                        string email = Console.ReadLine();
+                        int flag1 = 0;
+                        foreach (Contacts ct in contacts)
+                        {
+                            if (ct.first_name.ToLower().Equals(first_name.ToLower()) && ct.last_name.ToLower().Equals(last_name.ToLower()))
+                            {
+                                Console.WriteLine("Entry of this name is already present. Please enter a new Name");
+                                flag1 = 1;
+                                break;
+                            }
+                        }
+                        //Allows if New Name is entered
+                        if (flag1 == 0)
+                        {
+                            Console.WriteLine("Enter the address: ");
+                            string address = Console.ReadLine();
+                            Console.WriteLine("Enter the city: ");
+                            string city = Console.ReadLine();
+                            Console.WriteLine("Enter the state: ");
+                            string state = Console.ReadLine();
+                            Console.WriteLine("Enter the zip: ");
+                            int zip = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Enter the phone number");
+                            long phone = Convert.ToInt64(Console.ReadLine());
+                            Console.WriteLine("Enter the email: ");
+                            string email = Console.ReadLine();
 
-                        Contacts ct1 = new Contacts(first_name, last_name, address, city, state, zip, phone, email);
-                        list.Add(ct1);
-                        Console.WriteLine("Contact Added Successfully");
+                            Contacts ct1 = new Contacts(first_name, last_name, address, city, state, zip, phone, email);
+                            list.Add(ct1);
+                            Console.WriteLine("Contact Added Successfully");
+                        }
                         break;
 
                     case 2:
@@ -204,22 +218,21 @@ namespace AddressBookProblem
                             }
                         }
                         break;
-
                     case 3:
-                        Console.WriteLine("Enter the phone number of the person: ");
+                        Console.WriteLine("Enter the first name of the person: ");
                         string fst = Console.ReadLine();
                         List<Contacts> lst = new List<Contacts>();
                         foreach (Contacts c in contacts)
                         {
-                            if (c.phone.Equals(fst))
+                            if (c.first_name.Equals(fst))
                             {
-                                lst.Add(c);  //can't delete the object while iterating through the list, it leads to exception
+                                //we can't delete the object while iterating through the list, it leads to exception
+                                lst.Add(c);
                             }
                         }
                         contacts.RemoveAll(i => lst.Contains(i));
-                        Console.WriteLine("Contact Deleted Successfully");
+                        Console.WriteLine("Contact Removed Successfully");
                         break;
-
                     case 4:
                         foreach (Contacts c in contacts)
                         {
