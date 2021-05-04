@@ -26,6 +26,7 @@ namespace AddressBookProblem
                 Console.WriteLine("Enter the following choice");
                 Console.WriteLine("1. Add Contacts");
                 Console.WriteLine("2. Edit Contacts");
+                Console.WriteLine("3. Delete Contacts");
                 Console.WriteLine("4. Display Contacts");
                 Console.WriteLine("5. Exit");
                 Console.WriteLine("Enter your choice: ");
@@ -139,6 +140,22 @@ namespace AddressBookProblem
                             }
                         }
                         break;
+
+                    case 3:
+                        Console.WriteLine("Enter the phone number of the person: ");
+                        string fst = Console.ReadLine();
+                        List<Contacts> lst = new List<Contacts>();
+                        foreach (Contacts c in contacts)
+                        {
+                            if (c.phone.Equals(fst))
+                            {
+                                lst.Add(c);  //can't delete the object while iterating through the list, it leads to exception
+                            }
+                        }
+                        contacts.RemoveAll(i => lst.Contains(i));
+                        Console.WriteLine("Contact Deleted Successfully");
+                        break;
+
                     case 4:
                         foreach (Contacts c in contacts)
                         {

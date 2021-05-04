@@ -8,6 +8,7 @@ namespace AddressBookProblem
 {
     class Contacts
     {
+
         //list is created to store contact info
         List<Contacts> contacts = new List<Contacts>();
 
@@ -89,6 +90,5 @@ namespace AddressBookProblem
         {
             return "First Name: " + first_name + ", " + "Last Name: " + last_name + ", " + "Address: " + address + ", " + "City: " + city + ", " + "State: " + state + ", " + "Zip: " + zip + ", Phone Number: " + phone + ", Email-id: " + email;
         }
-
     }
 }
