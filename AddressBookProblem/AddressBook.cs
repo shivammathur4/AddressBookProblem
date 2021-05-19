@@ -20,10 +20,12 @@ namespace AddressBookProblem
         
         public Contact FindContact(string fname)
         {
+            
             Contact contact = People.Find((person) => person.FirstName == fname);
             return contact;
         }
 
+        
         
         public bool AddContact(string FirstName, string LastName, string Address, string City, string State, string ZipCode, string PhoneNumber, string Email)
         {
