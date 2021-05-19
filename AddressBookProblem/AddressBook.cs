@@ -8,7 +8,6 @@ namespace AddressBookProblem
 {
     class AddressBook
     {
-        
         public static List<Contact> People;
 
         
@@ -20,12 +19,10 @@ namespace AddressBookProblem
         
         public Contact FindContact(string fname)
         {
-            
             Contact contact = People.Find((person) => person.FirstName == fname);
             return contact;
         }
 
-        
         
         public bool AddContact(string FirstName, string LastName, string Address, string City, string State, string ZipCode, string PhoneNumber, string Email)
         {
@@ -38,6 +35,21 @@ namespace AddressBookProblem
             }
             else
                 return false;
+        }
+
+        
+        public bool RemoveContact(string name)
+        {
+            Contact c = FindContact(name);
+            if (c != null)
+            {
+                People.Remove(c);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
