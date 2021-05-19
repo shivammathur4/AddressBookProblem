@@ -8,6 +8,7 @@ namespace AddressBookProblem
 {
     class AddressBook
     {
+        
         public static List<Contact> People;
 
         
