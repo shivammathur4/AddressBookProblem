@@ -8,7 +8,7 @@ namespace AddressBookProblem
 {
     namespace Day_20_AddressBook
     {
-        class Contact
+        public class Contact
         {
             /// <summary>
             /// Gets or sets the first name.

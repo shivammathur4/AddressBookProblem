@@ -10,8 +10,8 @@ namespace AddressBookProblem
 
     class Program
     {
-        //creating a list
-        public static List<string> data = new List<string>();
+        //createsa list 
+        public static List<Contact> data1 = new List<Contact>();
 
         /// <summary>
         /// Defines the entry point of the application.
@@ -19,7 +19,7 @@ namespace AddressBookProblem
         /// <param name="args">The arguments.</param>
         static void Main(string[] args)
         {
-            //reference for binder class
+            //reference for addressbook binder
             AddressBookBinder binder = new AddressBookBinder();
             Console.WriteLine("Hello, Welcome to Address Book");
             int result = 1;
@@ -142,21 +142,18 @@ namespace AddressBookProblem
                 Console.WriteLine("Do you want to enter an address book. \n1. yes \n2. no");
                 result = int.Parse(Console.ReadLine());
             }
-            //traversing through binder class
             foreach (var key in binder.Binder.Keys)
             {
-                data.Add(key);
-                //traversing ithrough contact class
                 foreach (Contact c in binder.Binder[key])
                 {
-                    data.Add(c.ToString());
+                    data1.Add(c);
                 }
             }
-            Console.WriteLine("Writing contacts in file");
-            //writes using stream writer
-            ReadWrite.WriteUsingStreamWriter(data);
-            //reads from stream reader
+            Console.WriteLine("Writing contacts in file : ");
+            ReadWrite.WriteUsingStreamWriter(data1);
             ReadWrite.ReadFromStreamReader();
+            ReadWrite.ImplementCSVDataHandling();
+            ReadWrite.WriteCSVFile(data1);
         }
     }
 }
