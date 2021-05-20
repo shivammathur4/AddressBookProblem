@@ -10,9 +10,9 @@ namespace AddressBookProblem
 {
     class AddressBookBinder
     {
-        //dictionary to store details of binder class
+        //Address books store with address book name as key
         public Dictionary<string, List<Contact>> Binder = new Dictionary<string, List<Contact>>();
-        //dictinary to store city
+        //Dictionary of contacts seggregated citywise
         public Dictionary<string, List<Contact>> CityDictionary = new Dictionary<string, List<Contact>>();
 
         /// <summary>
@@ -21,6 +21,7 @@ namespace AddressBookProblem
         /// <param name="key">The key.</param>
         /// <param name="set">The set.</param>
         /// <returns></returns>
+        //Creating Different AddressBooks
         public List<Contact> AddAddrBook(string key, List<Contact> set)
         {
             if (this.Binder.ContainsKey(key))
@@ -40,25 +41,27 @@ namespace AddressBookProblem
         /// Distincts the cities.
         /// </summary>
         /// <returns></returns>
+         //List of different cities whose contact exists is created
         public List<string> DistinctCities()
         {
-            List<string> City = new List<string>();
+            List<string> city = new List<string>();
             foreach (var key in Binder.Keys)
             {
                 foreach (Contact c in Binder[key])
                 {
-                    if (City.Contains(c.City))
+                    if (city.Contains(c.City))
                         continue;
                     else
-                        City.Add(c.City);
+                        city.Add(c.City);
                 }
             }
-            return City;
+            return city;
         }
 
         /// <summary>
         /// Creates the dictionary.
         /// </summary>
+        //Creating Dictionary with city as a key
         public void CreateDictionary()
         {
             //creates a list

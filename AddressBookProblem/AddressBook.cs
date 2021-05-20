@@ -9,22 +9,25 @@ namespace AddressBookProblem
 {
     class AddressBook
     {
-        //declaration
+        //AddressBook: List of contacts on which operations will be performed
         public List<Contact> People;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddressBook"/> class.
         /// </summary>
+        //Constructor for initializing new Address book    
         public AddressBook()
         {
             People = new List<Contact>();
         }
+
 
         /// <summary>
         /// Finds the contact.
         /// </summary>
         /// <param name="fname">The fname.</param>
         /// <returns></returns>
+         //Finding a contact with its first name
         public Contact FindContact(string fname)
         {
             Contact contact = null;
@@ -51,6 +54,7 @@ namespace AddressBookProblem
         /// <param name="PhoneNumber">The phone number.</param>
         /// <param name="Email">The email.</param>
         /// <returns></returns>
+         //Adding a contact to the address book
         public bool AddContact(string FirstName, string LastName, string Address, string City, string State, string ZipCode, string PhoneNumber, string Email)
         {
             Contact contact = new Contact(FirstName, LastName, Address, City, State, ZipCode, PhoneNumber, Email);
@@ -73,6 +77,7 @@ namespace AddressBookProblem
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns></returns>
+        // //Removing a contact from the address book
         public bool RemoveContact(string name)
         {
             //creation of object for contact
@@ -94,6 +99,7 @@ namespace AddressBookProblem
         /// <summary>
         /// Alphabeticallies the arrange.
         /// </summary>
+        //Arranging the contacts in an address book alphabetically
         public void AlphabeticallyArrange()
         {
             //creation of list
@@ -118,11 +124,14 @@ namespace AddressBookProblem
         /// </summary>
         public void SortByPincode()
         {
+            //Comparision method is used to compare two objects of same type
             People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.ZipCode, y.ZipCode)));
+            //traversing through contact class
             foreach (Contact c in People)
             {
                 Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
             }
+
         }
 
         /// <summary>
@@ -141,7 +150,7 @@ namespace AddressBookProblem
         }
 
         /// <summary>
-        /// Sorts the state of the by.
+        /// Sorts the state 
         /// </summary>
         public void SortByState()
         {
@@ -152,7 +161,6 @@ namespace AddressBookProblem
             {
                 Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
             }
-
         }
     }
 }

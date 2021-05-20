@@ -1,5 +1,6 @@
 ﻿using AddressBookProblem.Day_20_AddressBook;
 using CsvHelper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,16 +16,16 @@ namespace AddressBookProblem
         /// <summary>
         /// Reads from stream reader.
         /// </summary>
-        //reading a text file
+        //Reading a txt file
         public static void ReadFromStreamReader()
         {
-            string path = @"C:\Users\admin\source\repos\Day-20-AddressBook\Day-20-AddressBook\Utility\Contacts.txt";
+            string path = @"C:\Users\SHIVAM MATHUR\source\repos\AddressBookProblem\AddressBookProblem\Contacts.txt";
             if (File.Exists(path))
             {
-                using (StreamReader sr = File.OpenText(path))
+                using (StreamReader streamReader = File.OpenText(path))
                 {
-                    String fileData = " ";
-                    while ((fileData = sr.ReadLine()) != null)
+                    String fileData = "";
+                    while ((fileData = streamReader.ReadLine()) != null)
                         Console.WriteLine((fileData));
                 }
                 Console.ReadKey();
@@ -39,10 +40,10 @@ namespace AddressBookProblem
         /// Writes the using stream writer.
         /// </summary>
         /// <param name="data">The data.</param>
-        //writing to a text file
+         //Writing to a txt file
         public static void WriteUsingStreamWriter(List<Contact> data)
         {
-            string path = @"C:\Users\admin\source\repos\Day-20-AddressBook\Day-20-AddressBook\Utility\Contacts.txt";
+            string path = @"C:\Users\SHIVAM MATHUR\source\repos\AddressBookProblem\AddressBookProblem\Contacts.txt";
             if (File.Exists(path))
             {
                 using (StreamWriter streamWriter = File.AppendText(path))
@@ -62,18 +63,73 @@ namespace AddressBookProblem
         }
 
         /// <summary>
-        /// Implements the CSV data handling.
+        /// Reads the CSV file.
         /// </summary>
-        //reading a csv file
-        public static void ImplementCSVDataHandling()
+        //Read a CSV File
+        public static void ReadCSVFile()
         {
-            string filePath = @"C:\Users\admin\source\repos\Day-20-AddressBook\Day-20-AddressBook\Utility\Contact.csv";
-            using (var reader = new StreamReader(filePath))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            string filePath = @"C:\Users\SHIVAM MATHUR\source\repos\AddressBookProblem\AddressBookProblem\Contact.csv";
+            if (File.Exists(filePath))
             {
-                var records = csv.GetRecords<Contact>().ToList();
-                Console.WriteLine("Data Reading done successfully from Contact.csv file");
-                foreach (Contact contact in records)
+                using (var reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var records = csv.GetRecords<Contact>().ToList();
+                    Console.WriteLine("Data Reading done successfully from Contact.csv file");
+                    foreach (Contact contact in records)
+                    {
+                        Console.Write("\t" + contact.FirstName);
+                        Console.Write("\t" + contact.LastName);
+                        Console.Write("\t" + contact.Address);
+                        Console.Write("\t" + contact.City);
+                        Console.Write("\t" + contact.State);
+                        Console.Write("\t" + contact.ZipCode);
+                        Console.Write("\t" + contact.PhoneNumber);
+                        Console.Write("\t" + contact.Email);
+                        Console.Write("\n");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("File Doesn't Exist");
+            }
+        }
+
+        /// <summary>
+        /// Writes the CSV file.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        // //Write to a CSV File
+        public static void WriteCSVFile(List<Contact> data)
+        {
+            string filePath = @"C:\Users\SHIVAM MATHUR\source\repos\AddressBookProblem\AddressBookProblem\Contact.csv";
+            if (File.Exists(filePath))
+            {
+                using (var writer = new StreamWriter(filePath))
+                using (var csvWrite = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    Console.WriteLine("Data Writing done successfully from Contact.csv file");
+                    csvWrite.WriteRecords(data);
+                }
+            }
+            else
+            {
+                Console.WriteLine("File Doesn't Exist");
+            }
+        }
+
+        /// <summary>
+        /// Reads the json file.
+        /// </summary>
+        //Read a JSON File
+        public static void ReadJsonFile()
+        {
+            string filePath = @"C:\Users\SHIVAM MATHUR\source\repos\AddressBookProblem\AddressBookProblem\Contacts.json";
+            if (File.Exists(filePath))
+            {
+                IList<Contact> contactsRead = JsonConvert.DeserializeObject<IList<Contact>>(File.ReadAllText(filePath));
+                foreach (Contact contact in contactsRead)
                 {
                     Console.Write("\t" + contact.FirstName);
                     Console.Write("\t" + contact.LastName);
@@ -86,21 +142,32 @@ namespace AddressBookProblem
                     Console.Write("\n");
                 }
             }
+            else
+            {
+                Console.WriteLine("File exists!");
+            }
         }
 
         /// <summary>
-        /// Writes the CSV file.
+        /// Writes to json file.
         /// </summary>
         /// <param name="data">The data.</param>
-        //writing a csv file
-        public static void WriteCSVFile(List<Contact> data)
+        //Write A JSON file
+        public static void WriteToJsonFile(List<Contact> data)
         {
-            string filePath = @"C:\Users\admin\source\repos\Day-20-AddressBook\Day-20-AddressBook\Utility\Contact.csv";
-            using (var writer = new StreamWriter(filePath))
-            using (var csvWrite = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            string filePath = @"C:\Users\SHIVAM MATHUR\source\repos\AddressBookProblem\AddressBookProblem\Contacts.json";
+            if (File.Exists(filePath))
             {
-                Console.WriteLine("Data Writing done successfully from Contact.csv file");
-                csvWrite.WriteRecords(data);
+                JsonSerializer jsonSerializer = new JsonSerializer();
+                using (StreamWriter streamWriter = new StreamWriter(filePath))
+                using (JsonWriter writer = new JsonTextWriter(streamWriter))
+                {
+                    jsonSerializer.Serialize(writer, data);
+                }
+            }
+            else
+            {
+                Console.WriteLine("File exists!");
             }
         }
     }

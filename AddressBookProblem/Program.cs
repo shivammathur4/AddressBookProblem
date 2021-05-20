@@ -10,18 +10,16 @@ namespace AddressBookProblem
 
     class Program
     {
-        //createsa list 
-        public static List<Contact> data1 = new List<Contact>();
-
+        //List to store contacts added in every address book
+        public static List<Contact> data = new List<Contact>();
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
         /// <param name="args">The arguments.</param>
         static void Main(string[] args)
         {
-            //reference for addressbook binder
             AddressBookBinder binder = new AddressBookBinder();
-            Console.WriteLine("Hello, Welcome to Address Book");
+            Console.WriteLine("Welcome to Address Book Program");
             int result = 1;
             while (result == 1)
             {
@@ -142,18 +140,25 @@ namespace AddressBookProblem
                 Console.WriteLine("Do you want to enter an address book. \n1. yes \n2. no");
                 result = int.Parse(Console.ReadLine());
             }
+            //Storing contacts added in adress books to data list
             foreach (var key in binder.Binder.Keys)
             {
                 foreach (Contact c in binder.Binder[key])
                 {
-                    data1.Add(c);
+                    data.Add(c);
                 }
             }
-            Console.WriteLine("Writing contacts in file : ");
-            ReadWrite.WriteUsingStreamWriter(data1);
-            ReadWrite.ReadFromStreamReader();
-            ReadWrite.ImplementCSVDataHandling();
-            ReadWrite.WriteCSVFile(data1);
+            //Txt file operations
+            //Console.WriteLine("Writing contacts in txt file");
+            //ReadWrite.WriteUsingStreamWriter(data);
+            //ReadWrite.ReadFromStreamReader();
+            //CSV File operations
+            //Console.WriteLine("Writing contacts in csv file");
+            //ReadWrite.WriteCSVFile(data);
+            //ReadWrite.ReadCSVFile();
+            //JSON File operations
+            ReadWrite.WriteToJsonFile(data);
+            ReadWrite.ReadJsonFile();
         }
     }
 }
